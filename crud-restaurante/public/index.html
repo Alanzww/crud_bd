@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Restaurante</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciamento de Cardápio</h1>
+
+        <div class="caixa">
+            <h2 id="form-titulo">Novo Prato</h2>
+            <form id="form-prato">
+                <input type="hidden" id="id_prato">
+
+                <div class="campo">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" required maxlength="100" placeholder="Ex: Baião de Dois">
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" required>
+                            <option value="Entrada">Entrada</option>
+                            <option value="Prato Principal" selected>Prato Principal</option>
+                            <option value="Sobremesa">Sobremesa</option>
+                            <option value="Bebida">Bebida</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="preco">Preço (R$)</label>
+                        <input type="number" id="preco" required min="0" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="campo-check">
+                    <input type="checkbox" id="disponivel" checked>
+                    <label for="disponivel">Disponível no cardápio</label>
+                </div>
+
+                <div class="botoes">
+                    <button type="submit" class="btn-primario">Salvar</button>
+                    <button type="button" id="btn-cancelar" class="btn-secundario" hidden>Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="caixa">
+            <h2>Pratos Cadastrados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-pratos"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
