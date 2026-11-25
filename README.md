@@ -1,4 +1,19 @@
-Como rodar na máquina:
+# Trabalho Final BD - Equipe 8 (Restaurante)
+
+## Integrantes
+- 573127 - Alan Douglas Sousa Marques
+- 579149 - Izaac Gabriel Silva Barbosa
+- 508925 - Marcello Ricardo Nogueira de Almeida
+- 576153 - Nicolas Gomes Harnisch
+- 579216 - Paulo Augusto Aguiar dos Santos
+- 579240 - Pedro Henrique Silva Fernandes
+
+## Estrutura do Repositório
+- `01_Modelagem/` - Diagrama Conceitual (`DER_Conceitual_Restaurante.pdf`) e Diagrama Lógico (`bdtrabalho.mwb`)
+- `02_SQL/` - Scripts SQL (`01_ddl.sql`, `02_dml.sql` e `03_relatorios.sql`)
+- `03_CRUD/` - Aplicação Web CRUD da tabela `prato` (Node.js + Express + SQLite)
+
+## Como rodar na máquina:
 
 - Clone o repositório:
 
@@ -6,7 +21,7 @@ Como rodar na máquina:
 
 - Entre na pasta do CRUD:
 
-2. cd crud_bd/crud-restaurante
+2. cd crud_bd/03_CRUD
 
 - Instale as dependências e inicie:
 

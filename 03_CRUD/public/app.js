@@ -2,17 +2,16 @@ const form = document.getElementById('form-prato');
 const formTitulo = document.getElementById('form-titulo');
 const inputId = document.getElementById('id_prato');
 const inputNome = document.getElementById('nome');
-const inputCategoria = document.getElementById('categoria');
+const inputDescricao = document.getElementById('descricao');
+const inputCategoria = document.getElementById('id_categoria');
 const inputPreco = document.getElementById('preco');
-const inputDisponivel = document.getElementById('disponivel');
 const btnCancelar = document.getElementById('btn-cancelar');
 const tabela = document.getElementById('tabela-pratos');
 
 function limparFormulario() {
     inputId.value = '';
     form.reset();
-    inputCategoria.value = 'Prato Principal';
-    inputDisponivel.checked = true;
+    inputCategoria.value = '2';
     formTitulo.textContent = 'Novo Prato';
     btnCancelar.hidden = true;
 }
@@ -20,9 +19,9 @@ function limparFormulario() {
 function preencherEdicao(prato) {
     inputId.value = prato.id_prato;
     inputNome.value = prato.nome;
-    inputCategoria.value = prato.categoria;
+    inputDescricao.value = prato.descricao || '';
+    inputCategoria.value = String(prato.id_categoria);
     inputPreco.value = Number(prato.preco).toFixed(2);
-    inputDisponivel.checked = Boolean(prato.disponivel);
     formTitulo.textContent = `Editando Prato #${prato.id_prato}`;
     btnCancelar.hidden = false;
     inputNome.focus();
@@ -54,9 +53,9 @@ async function carregarPratos() {
         const tr = document.createElement('tr');
         tr.appendChild(criarCelula(prato.id_prato));
         tr.appendChild(criarCelula(prato.nome));
+        tr.appendChild(criarCelula(prato.descricao || '-'));
         tr.appendChild(criarCelula(prato.categoria));
         tr.appendChild(criarCelula(`R$ ${Number(prato.preco).toFixed(2).replace('.', ',')}`));
-        tr.appendChild(criarCelula(prato.disponivel ? 'Disponível' : 'Indisponível'));
 
         const tdAcoes = document.createElement('td');
         tdAcoes.className = 'acoes';
@@ -101,9 +100,9 @@ form.addEventListener('submit', async (event) => {
     const id = inputId.value;
     const dados = {
         nome: inputNome.value.trim(),
-        categoria: inputCategoria.value,
-        preco: Number(inputPreco.value),
-        disponivel: inputDisponivel.checked
+        descricao: inputDescricao.value.trim(),
+        id_categoria: Number(inputCategoria.value),
+        preco: Number(inputPreco.value)
     };
 
     const url = id ? `/pratos/${id}` : '/pratos';

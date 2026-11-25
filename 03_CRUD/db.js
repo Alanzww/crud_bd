@@ -8,7 +8,7 @@ const sqlPath = path.join(__dirname, 'banco.sql');
 const db = new sqlite3.Database(dbPath);
 
 function initDb(callback) {
-    db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='prato'", (err, row) => {
+    db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='categoria'", (err, row) => {
         if (err) return callback(err);
         if (row) return callback(null);
 
