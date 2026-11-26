@@ -1,19 +1,47 @@
 const fs = require('fs');
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const mysql = require('mysql2');
 
-const dbPath = path.join(__dirname, 'restaurante.db');
 const sqlPath = path.join(__dirname, 'banco.sql');
 
-const db = new sqlite3.Database(dbPath);
+const db = mysql.createConnection({
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    port: Number(process.env.DB_PORT) || 3306,
+    multipleStatements: true
+});
 
 function initDb(callback) {
-    db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='categoria'", (err, row) => {
+    db.connect((err) => {
         if (err) return callback(err);
-        if (row) return callback(null);
 
-        const sql = fs.readFileSync(sqlPath, 'utf8');
-        db.exec(sql, callback);
+        db.query('CREATE DATABASE IF NOT EXISTS restaurant; USE restaurant;', (errDb) => {
+            if (errDb) return callback(errDb);
+
+            db.query("SHOW TABLES LIKE 'prato'", (errTbl, rows) => {
+                if (errTbl) return callback(errTbl);
+
+                if (rows.length === 0) {
+                    const sql = fs.readFileSync(sqlPath, 'utf8');
+                    return db.query(sql, callback);
+                }
+
+                db.query('SELECT COUNT(*) AS total FROM categoria', (errCount, countRows) => {
+                    if (errCount) return callback(errCount);
+                    if (countRows[0].total > 0) return callback(null);
+
+                    const insertCategorias = `
+                        INSERT INTO categoria (nome) VALUES
+                            ('Entradas'),
+                            ('Pratos Principais'),
+                            ('Sobremesas'),
+                            ('Bebidas');
+                    `;
+                    db.query(insertCategorias, callback);
+                });
+            });
+        });
     });
 }
 

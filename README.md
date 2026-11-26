@@ -11,9 +11,11 @@
 ## Estrutura do Repositório
 - `01_Modelagem/` - Diagrama Conceitual (`DER_Conceitual_Restaurante.pdf`) e Diagrama Lógico (`bdtrabalho.mwb`)
 - `02_SQL/` - Scripts SQL (`01_ddl.sql`, `02_dml.sql` e `03_relatorios.sql`)
-- `03_CRUD/` - Aplicação Web CRUD da tabela `prato` (Node.js + Express + SQLite)
+- `03_CRUD/` - Aplicação Web CRUD da tabela `prato` (Node.js + Express + MySQL / phpMyAdmin)
 
 ## Como rodar na máquina:
+
+- Certifique-se de que o **MySQL** (XAMPP / WAMP / phpMyAdmin) está iniciado (padrão: usuário `root`, sem senha, porta `3306`, banco `restaurant`).
 
 - Clone o repositório:
 

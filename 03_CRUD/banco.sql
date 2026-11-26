@@ -1,68 +1,85 @@
+CREATE DATABASE IF NOT EXISTS restaurant;
+USE restaurant;
+
 CREATE TABLE IF NOT EXISTS categoria (
-    id_categoria INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL UNIQUE
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(80) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS mesa (
-    id_mesa INTEGER PRIMARY KEY AUTOINCREMENT,
-    numero INTEGER NOT NULL UNIQUE,
-    capacidade INTEGER NOT NULL,
-    status TEXT NOT NULL DEFAULT 'Livre'
+    id_mesa INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT NOT NULL UNIQUE,
+    capacidade INT NOT NULL,
+    status VARCHAR(30) NOT NULL DEFAULT 'Livre'
 );
 
 CREATE TABLE IF NOT EXISTS cliente (
-    id_cliente INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    cpf TEXT NOT NULL UNIQUE,
-    telefone TEXT
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    telefone VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS funcionario (
-    id_funcionario INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    cargo TEXT NOT NULL,
-    salario REAL NOT NULL
+    id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    cargo VARCHAR(60) NOT NULL,
+    salario DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS prato (
-    id_prato INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    descricao TEXT,
-    preco REAL NOT NULL,
-    id_categoria INTEGER NOT NULL,
-    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+    id_prato INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255),
+    preco DECIMAL(10, 2) NOT NULL,
+    id_categoria INT NOT NULL,
+    CONSTRAINT fk_prato_categoria
+        FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS pedido (
-    id_pedido INTEGER PRIMARY KEY AUTOINCREMENT,
-    data_hora TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    status TEXT NOT NULL DEFAULT 'Aberto',
-    valor_total REAL NOT NULL DEFAULT 0.00,
-    id_mesa INTEGER NOT NULL,
-    id_cliente INTEGER NOT NULL,
-    id_funcionario INTEGER NOT NULL,
-    FOREIGN KEY (id_mesa) REFERENCES mesa(id_mesa),
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
-    FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario)
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    data_hora DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(30) NOT NULL DEFAULT 'Aberto',
+    valor_total DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    id_mesa INT NOT NULL,
+    id_cliente INT NOT NULL,
+    id_funcionario INT NOT NULL,
+    CONSTRAINT fk_pedido_mesa
+        FOREIGN KEY (id_mesa) REFERENCES mesa(id_mesa)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_pedido_cliente
+        FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_pedido_funcionario
+        FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS pagamento (
-    id_pagamento INTEGER PRIMARY KEY AUTOINCREMENT,
-    data_pagamento TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    valor REAL NOT NULL,
-    forma TEXT NOT NULL,
-    id_pedido INTEGER NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+    id_pagamento INT AUTO_INCREMENT PRIMARY KEY,
+    data_pagamento DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    valor DECIMAL(10, 2) NOT NULL,
+    forma VARCHAR(40) NOT NULL,
+    id_pedido INT NOT NULL,
+    CONSTRAINT fk_pagamento_pedido
+        FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS pedido_prato (
-    id_pedido INTEGER NOT NULL,
-    id_prato INTEGER NOT NULL,
-    quantidade INTEGER NOT NULL DEFAULT 1,
-    observacao TEXT,
+    id_pedido INT NOT NULL,
+    id_prato INT NOT NULL,
+    quantidade INT NOT NULL DEFAULT 1,
+    observacao VARCHAR(200),
     PRIMARY KEY (id_pedido, id_prato),
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
-    FOREIGN KEY (id_prato) REFERENCES prato(id_prato)
+    CONSTRAINT fk_pedido_prato_pedido
+        FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_pedido_prato_prato
+        FOREIGN KEY (id_prato) REFERENCES prato(id_prato)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 INSERT INTO categoria (nome) VALUES
