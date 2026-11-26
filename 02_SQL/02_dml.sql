@@ -1,7 +1,5 @@
--- Manipulação de dados (DML)
 USE restaurant;
 
--- Inserções (INSERT)
 INSERT INTO categoria (nome) VALUES
     ('Entradas'),
     ('Pratos Principais'),
@@ -42,20 +40,11 @@ INSERT INTO pedido_prato (id_pedido, id_prato, quantidade, observacao) VALUES
 INSERT INTO pagamento (data_pagamento, valor, forma, id_pedido) VALUES
     ('2026-11-23 13:10:00', 66.00, 'PIX', 2);
 
--- Consultas simples (SELECT)
 SELECT * FROM cliente;
 SELECT * FROM prato;
 SELECT * FROM pedido;
 
--- Atualizações (UPDATE)
-UPDATE mesa
-SET status = 'Reservada'
-WHERE numero = 2;
+UPDATE mesa SET status = 'Reservada' WHERE numero = 2;
+UPDATE prato SET preco = 56.00 WHERE id_prato = 2;
 
-UPDATE prato
-SET preco = 56.00
-WHERE id_prato = 2;
-
--- Exclusão (DELETE)
-DELETE FROM pedido_prato
-WHERE id_pedido = 1 AND id_prato = 1;
+DELETE FROM pedido_prato WHERE id_pedido = 1 AND id_prato = 1;

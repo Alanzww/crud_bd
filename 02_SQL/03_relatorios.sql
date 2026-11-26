@@ -1,25 +1,19 @@
--- Comandos de relatório
 USE restaurant;
 
--- Relatório 1: Busca de pratos (WHERE + LIKE)
-SELECT
-    id_prato,
-    nome,
-    descricao,
-    preco
+-- 1. Busca de pratos (WHERE e LIKE)
+SELECT id_prato, nome, descricao, preco
 FROM prato
-WHERE nome LIKE '%de%'
-  AND preco >= 15.00
+WHERE nome LIKE '%de%' AND preco >= 15.00
 ORDER BY preco DESC;
 
--- Relatório 2: Resumo de preços do cardápio (COUNT, MIN, MAX)
+-- 2. Resumo de preços do cardápio (COUNT, MIN e MAX)
 SELECT
     COUNT(*) AS total_pratos,
     MIN(preco) AS menor_preco,
     MAX(preco) AS maior_preco
 FROM prato;
 
--- Relatório 3: Pedidos finalizados detalhados (INNER JOIN + WHERE)
+-- 3. Pedidos finalizados (INNER JOIN e WHERE)
 SELECT
     p.id_pedido,
     p.data_hora,

@@ -1,4 +1,3 @@
--- Banco e tabelas (DDL)
 CREATE DATABASE IF NOT EXISTS restaurant;
 USE restaurant;
 
@@ -34,9 +33,7 @@ CREATE TABLE prato (
     descricao VARCHAR(255),
     preco DECIMAL(10, 2) NOT NULL,
     id_categoria INT NOT NULL,
-    CONSTRAINT fk_prato_categoria
-        FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
 );
 
 CREATE TABLE pedido (
@@ -47,15 +44,9 @@ CREATE TABLE pedido (
     id_mesa INT NOT NULL,
     id_cliente INT NOT NULL,
     id_funcionario INT NOT NULL,
-    CONSTRAINT fk_pedido_mesa
-        FOREIGN KEY (id_mesa) REFERENCES mesa(id_mesa)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT fk_pedido_cliente
-        FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT fk_pedido_funcionario
-        FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY (id_mesa) REFERENCES mesa(id_mesa),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
+    FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario)
 );
 
 CREATE TABLE pagamento (
@@ -64,9 +55,7 @@ CREATE TABLE pagamento (
     valor DECIMAL(10, 2) NOT NULL,
     forma VARCHAR(40) NOT NULL,
     id_pedido INT NOT NULL,
-    CONSTRAINT fk_pagamento_pedido
-        FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
-        ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
 );
 
 CREATE TABLE pedido_prato (
@@ -75,15 +64,11 @@ CREATE TABLE pedido_prato (
     quantidade INT NOT NULL DEFAULT 1,
     observacao VARCHAR(200),
     PRIMARY KEY (id_pedido, id_prato),
-    CONSTRAINT fk_pedido_prato_pedido
-        FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_pedido_prato_prato
-        FOREIGN KEY (id_prato) REFERENCES prato(id_prato)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido),
+    FOREIGN KEY (id_prato) REFERENCES prato(id_prato)
 );
 
--- Exemplos de ALTER e DROP
+-- Alter e Drop
 ALTER TABLE cliente ADD COLUMN email VARCHAR(120);
 ALTER TABLE cliente MODIFY COLUMN email VARCHAR(150);
 ALTER TABLE cliente DROP COLUMN email;
