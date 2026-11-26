@@ -1,3 +1,12 @@
+- Equipe 8 - Restaurante:
+  
+573127 - Alan Douglas Sousa Marques
+579149 - Izaac Gabriel Silva Barbosa
+508925 - Marcello Ricardo Nogueira de Almeida
+576153 - Nicolas Gomes Harnisch
+579216 - Paulo Augusto Aguiar dos Santos
+579240 - Pedro Henrique Silva Fernandes
+
 Como rodar na máquina:
 
 - Clone o repositório:
@@ -14,11 +23,3 @@ Como rodar na máquina:
 4. `npm start` ( Pode ser que ele não inicie automaticamente, caso seja necessário use o comando )
 
 - Abra no navegador: `http://localhost:3000`
-
-Equipe 8 - Restaurante:
-573127 - Alan Douglas Sousa Marques
-579149 - Izaac Gabriel Silva Barbosa
-508925 - Marcello Ricardo Nogueira de Almeida
-576153 - Nicolas Gomes Harnisch
-579216 - Paulo Augusto Aguiar dos Santos
-579240 - Pedro Henrique Silva Fernandes
