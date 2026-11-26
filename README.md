@@ -1,5 +1,4 @@
-- Equipe 8 - Restaurante:
-  
+Equipe 8 - Restaurante:
 573127 - Alan Douglas Sousa Marques
 579149 - Izaac Gabriel Silva Barbosa
 508925 - Marcello Ricardo Nogueira de Almeida
